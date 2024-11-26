@@ -1,82 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Announcements</title>
-    <style>
-      /* Page styling */
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f9f9f9;
-        padding: 20px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Announcements</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #00274d; /* Dark blue background */
+      display: flex;
+      flex-direction: column; /* Ensure header is at the top */
+    }
 
-      .main-container {
-        max-width: 800px;
-        margin: auto;
-      }
+    /* Header styling */
+    .header {
+      background-color: #00274d; /* Navy blue */
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%; /* Full width of the page */
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
 
-      .announcement-card {
-        border: 1px solid #ddd;
-        padding: 20px;
-        margin-bottom: 15px;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
+    .header .college-info {
+      line-height: 1.5;
+    }
 
-      .announcement-card h3 {
-        margin: 0;
-        color: #333;
-      }
+    .header .college-info h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-      .announcement-card p {
-        margin: 5px 0;
-        color: #555;
-      }
+    .header .college-info p {
+      margin: 0;
+      font-size: 14px;
+    }
 
-      .announcement-date {
-        color: #888;
-        font-size: 14px;
-      }
+    /* Main container for sidebar and content */
+    .main-content {
+      display: flex;
+      flex-direction: row; /* Place sidebar and content side by side */
+      width: 100%;
+      flex-grow: 1;
+    }
 
-      .back-btn {
-        display: inline-block;
-        margin-top: 20px;
-        padding: 10px 15px;
-        background-color: #333;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
+    /* Sidebar styling */
+    .sidebar {
+      width: 220px;
+      background-color: #013a63; /* Slightly lighter shade of navy blue */
+      color: #ffffff; /* White text for contrast */
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    }
 
-      .back-btn:hover {
-        background-color: #444;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="main-container">
-      <h1>Latest Announcements</h1>
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 100%; /* Center the title horizontally */
+      color: #e3f2fd; /* Light tint of blue for the title */
+    }
 
-      <div id="announcements-container">
-        {% if announcements %} {% for announcement in announcements %}
-        <div class="announcement-card">
-          <h3>{{ announcement.title }}</h3>
-          <p class="announcement-date">
-            Published on: {{ announcement.published }}
-          </p>
-          <p><strong>Type:</strong> {{ announcement.type }}</p>
-          <p>{{ announcement.description }}</p>
-        </div>
-        {% endfor %} {% else %}
-        <p>No announcements available.</p>
-        {% endif %}
-      </div>
+    .sidebar a {
+      display: block;
+      color: #e3f2fd; /* Light tint of blue for links */
+      text-decoration: none;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      width: 100%; /* Makes links take the full width */
+      font-weight: bold;
+    }
 
-      <a href="{% url 'student_home' %}" class="back-btn">Back to Dashboard</a>
+    .sidebar a:hover {
+      background-color: #01497c; /* Slightly darker shade of blue for hover */
+    }
+
+    /* Page content styling */
+    .page-container {
+      background-color: white; /* White content area */
+      margin: 20px;
+      border-radius: 10px; /* Rounded corners */
+      flex-grow: 1; /* Take up the remaining space */
+      border: 2px solid rgba(211, 211, 211, 0.8); /* Same as footer color */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      padding: 40px; /* Padding for content */
+    }
+
+    .main-container {
+      max-width: 100%; /* Adjusted to fit inside the page container */
+    }
+
+    .announcement-card {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .announcement-card h3 {
+      margin: 0;
+      color: #333;
+    }
+
+    .announcement-card p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .announcement-date {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      background-color: #444;
+    }
+
+    .footer {
+      background-color: rgba(211, 211, 211, 0.8); /* Light grey with transparency */
+      color: #333; /* Darker text for contrast */
+      padding: 10px 20px;
+      font-size: 12px; /* Smaller font for footer text */
+      text-align: center;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      border-top: 2px solid rgba(211, 211, 211, 0.8); /* Clear border for footer */
+      margin-top: auto;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="college-info">
+      <h1>ANIL NEERUKONDA INSTITUTE OF TECHNOLOGY & SCIENCES (Autonomous)</h1>
+      <p>(Permanent Affiliation by Andhra University & Approved by AICTE)</p>
+      <p>Accredited by NBA (ECE, EEE, CSE, IT, Mech, Civil & Chemical) & NAAC A+</p>
+      <p>Sangivalasa-531 162, Bheemunipatnam Mandal, Visakhapatnam District</p>
     </div>
-  </body>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Campus Genius</h2>
+      <a href="{% url 'student_profile' %}">My Profile</a>
+      <a href="#">Curriculum</a>
+      <a href="#">Attendance</a>
+      <a href="{% url 'clubs' %}">Clubs</a>
+      <a href="#">Achievements</a>
+      <a href="{% url 'suggestion' %}">Suggestion</a>
+      <a href="{% url 'event_registration' %}">Event Registration</a>
+      <a href="{% url 'announcements' %}">Announcements</a>
+    </div>
+
+    <!-- Page Container -->
+    <div class="page-container">
+      <div class="main-container">
+        <h1>Latest Announcements</h1>
+
+        <div id="announcements-container">
+          {% if announcements %}
+          {% for announcement in announcements %}
+          <div class="announcement-card">
+            <h3>{{ announcement.title }}</h3>
+            <p class="announcement-date">
+              Published on: {{ announcement.published }}
+            </p>
+            <p><strong>Type:</strong> {{ announcement.type }}</p>
+            <p>{{ announcement.description }}</p>
+          </div>
+          {% endfor %}
+          {% else %}
+          <p>No announcements available.</p>
+          {% endif %}
+        </div>
+
+        <a href="{% url 'student_home' %}" class="back-btn">Back to Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 ANITS. All rights reserved.</p>
+  </div>
+</body>
 </html>

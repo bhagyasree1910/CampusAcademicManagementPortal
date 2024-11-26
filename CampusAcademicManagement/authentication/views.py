@@ -551,3 +551,104 @@ def add_student_information(request):
         return HttpResponseRedirect(reverse('add_student_information'))  # Redirect to the add_student page
 
     return render(request, 'admin_anits/add_student_information.html')
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.db import connection
+
+def view_student_information(request):
+    student_info = None
+    results_by_semester = None
+    
+    if "rollno" in request.session and request.session["role"] == "Admin":
+        # Check if studentID is provided via GET
+        studentID = request.GET.get('studentID', None)
+        
+        if studentID:
+            # Query to fetch student details based on studentID
+            cursor = connection.cursor()
+            cursor.execute(
+                """
+                SELECT studentID, name, deptID, phnNo, dob, personalMail, section, 
+                       date_of_joining, fathername, mothername, fatherphn, motherphn, 
+                       father_occupation, mother_occupation, fatherEducation, motherEducation,
+                       address, hostel_or_dayScholar, collegeBus, adhaarNo, fee_reimbursement 
+                FROM studentpersonalinfo 
+                WHERE studentID = %s
+                """,
+                [studentID],
+            )
+
+            student_data = cursor.fetchone()
+            if student_data:
+                student_info = {
+                    "studentID": student_data[0],
+                    "name": student_data[1],
+                    "deptID": student_data[2],
+                    "phnNo": student_data[3],
+                    "dob": student_data[4],
+                    "personalMail": student_data[5],
+                    "section": student_data[6],
+                    "date_of_joining": student_data[7],
+                    "fathername": student_data[8],
+                    "mothername": student_data[9],
+                    "fatherphn": student_data[10],
+                    "motherphn": student_data[11],
+                    "father_occupation": student_data[12],
+                    "mother_occupation": student_data[13],
+                    "fatherEducation": student_data[14],
+                    "motherEducation": student_data[15],
+                    "address": student_data[16],
+                    "hostel_or_dayScholar": student_data[17],
+                    "collegeBus": student_data[18],
+                    "adhaarNo": student_data[19],
+                    "fee_reimbursement": student_data[20],
+                }
+
+                # Fetch semester results for the student
+                cursor.execute(
+                    """
+                    SELECT 
+                        ce.semester, 
+                        c.courseName, 
+                        sr.grade
+                    FROM 
+                        course_enrollment ce
+                    JOIN 
+                        courses c ON ce.courseID = c.courseID
+                    JOIN 
+                        studentresultsinfo sr ON ce.courseID = sr.courseID AND ce.studentID = sr.studentID
+                    WHERE 
+                        ce.studentID = %s
+                    ORDER BY 
+                        ce.semester
+                    """,
+                    [studentID],
+                )
+
+                semester_results = cursor.fetchall()
+
+                # Structure the data into a dictionary to easily access results by semester
+                results_by_semester = {}
+                for result in semester_results:
+                    semester = result[0]
+                    if semester not in results_by_semester:
+                        results_by_semester[semester] = []
+                    results_by_semester[semester].append(
+                        {"courseName": result[1], "grade": result[2]}
+                    )
+            else:
+                messages.error(request, "No details not found for studentID: {}".format(studentID))
+                
+        return render(
+            request,
+            "admin_anits/student_profile_view.html",
+            {
+                "student_info": student_info,
+                "results_by_semester": results_by_semester,
+            },
+        )
+    
+    # Redirect to login if the session is not valid
+    return redirect("admin_home")

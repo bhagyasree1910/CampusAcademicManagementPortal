@@ -1,102 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clubs Management</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clubs Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #00274d; /* Dark blue background */
+      display: flex;
+      flex-direction: column; /* Ensure header is at the top */
+    }
 
-      .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      }
+    /* Header styling */
+    .header {
+      background-color: #00274d; /* Navy blue */
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%; /* Full width of the page */
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
 
-      h1 {
-        margin-bottom: 20px;
-      }
+    .header .college-info {
+      line-height: 1.5;
+    }
 
-      .button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        cursor: pointer;
-      }
+    .header .college-info h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+      color: white; /* Ensures text is white */
+    }
 
-      .button:hover {
-        background-color: #0056b3;
-      }
+    .header .college-info p {
+      margin: 0;
+      font-size: 14px;
+      color: white; /* Ensures text is white */
+    }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-      }
+    /* Main container for sidebar and content */
+    .main-content {
+      display: flex;
+      flex-direction: row; /* Place sidebar and content side by side */
+      width: 100%;
+      flex-grow: 1;
+    }
 
-      table,
-      th,
-      td {
-        border: 1px solid #ddd;
-      }
+    /* Sidebar styling */
+    .sidebar {
+      width: 220px;
+      background-color: #013a63; /* Slightly lighter shade of navy blue */
+      color: #ffffff; /* White text for contrast */
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    }
 
-      th,
-      td {
-        padding: 10px;
-        text-align: left;
-      }
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 100%; /* Center the title horizontally */
+      color: #e3f2fd; /* Light tint of blue for the title */
+    }
 
-      .form-container {
-        display: none;
-        margin-top: 20px;
-        padding: 20px;
-        border: 1px solid #ddd;
-        background-color: #f9f9f9;
-        border-radius: 5px;
-      }
+    .sidebar a {
+      display: block;
+      color: #e3f2fd; /* Light tint of blue for links */
+      text-decoration: none;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      width: 100%; /* Makes links take the full width */
+      font-weight: bold;
+    }
 
-      .form-container.active {
-        display: block;
-      }
+    .sidebar a:hover {
+      background-color: #01497c; /* Slightly darker shade of blue for hover */
+    }
 
-      .form-group {
-        margin-bottom: 15px;
-      }
+    /* Page content styling */
+    .page-container {
+      background-color: white; /* White content area */
+      margin: 20px;
+      border-radius: 10px; /* Rounded corners */
+      flex-grow: 1; /* Take up the remaining space */
+      border: 2px solid rgba(211, 211, 211, 0.8); /* Same as footer color */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      padding: 40px; /* Padding for content */
+    }
 
-      .form-group label {
-        display: block;
-        margin-bottom: 5px;
-      }
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
 
-      .form-group input,
-      .form-group textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 3D effect for table */
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    .form-container {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 3D effect for form */
+    }
+
+    .form-container.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Inner 3D effect */
+    }
+
+    .footer {
+      background-color: rgba(211, 211, 211, 0.8); /* Light grey with transparency */
+      color: #333; /* Darker text for contrast */
+      padding: 10px 20px;
+      font-size: 12px; /* Smaller font for footer text */
+      text-align: center;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      border-top: 2px solid rgba(211, 211, 211, 0.8); /* Clear border for footer */
+      margin-top: auto;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="college-info">
+      <h1>ANIL NEERUKONDA INSTITUTE OF TECHNOLOGY & SCIENCES (Autonomous)</h1>
+      <p>(Permanent Affiliation by Andhra University & Approved by AICTE)</p>
+      <p>Accredited by NBA (ECE, EEE, CSE, IT, Mech, Civil & Chemical) & NAAC A+</p>
+      <p>Sangivalasa-531 162, Bheemunipatnam Mandal, Visakhapatnam District</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Campus Genius</h2>
+        <a href="#">My Profile</a></li>
+        <a href="{% url 'admin_club' %}">Clubs</a>
+        <a href="{% url 'feedback_page' %}">Feedback</a>
+        <a href="#">Event Registration</a>
+        <a href="#">Announcements</a>
+        <a href="{% url 'add_student_information' %}">Add Student</a>
+        <a href="{% url 'view_student_information' %}">View Student Information</a>
+
+    </div>
+
+    <!-- Page Container -->
+    <div class="page-container">
       <h1>Clubs Management</h1>
 
       <!-- Button to show the create club form -->
       <div>
         <div class="button" id="create-club-button">Create Club</div>
       </div>
+
       <!-- Create club form -->
       <div class="form-container" id="create-club-form">
         <form method="POST">
@@ -110,27 +232,17 @@
             <textarea id="moto" name="moto" rows="3" required></textarea>
           </div>
           <div class="form-group">
-            <label for="registration_form_link"
-              >Registration Link (Optional):</label
-            >
-            <input
-              type="url"
-              id="registration_form_link"
-              name="registration_form_link"
-            />
+            <label for="registration_form_link">Registration Link (Optional):</label>
+            <input type="url" id="registration_form_link" name="registration_form_link" />
           </div>
           <div class="form-group">
             <label for="coordinator_roll">Coordinator Roll Number:</label>
-            <input
-              type="text"
-              id="coordinator_roll"
-              name="coordinator_roll"
-              required
-            />
+            <input type="text" id="coordinator_roll" name="coordinator_roll" required />
           </div>
           <button type="submit" class="button">Create Club</button>
         </form>
       </div>
+
       <!-- Table to display existing clubs -->
       <h2>Existing Clubs</h2>
       <table>
@@ -158,15 +270,21 @@
         </tbody>
       </table>
     </div>
+  </div>
 
-    <script>
-      // JavaScript to toggle form visibility
-      document
-        .getElementById("create-club-button")
-        .addEventListener("click", function () {
-          const form = document.getElementById("create-club-form");
-          form.classList.toggle("active");
-        });
-    </script>
-  </body>
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 ANITS. All rights reserved.</p>
+  </div>
+
+  <script>
+    // JavaScript to toggle form visibility
+    document
+      .getElementById("create-club-button")
+      .addEventListener("click", function () {
+        const form = document.getElementById("create-club-form");
+        form.classList.toggle("active");
+      });
+  </script>
+</body>
 </html>

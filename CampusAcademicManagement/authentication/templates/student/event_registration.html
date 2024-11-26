@@ -1,143 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Event Registration</title>
-    <style>
-      body {
-        background: linear-gradient(
-            rgba(255, 255, 255, 0.5),
-            rgba(255, 255, 255, 0.5)
-          ),
-          url("https://img.freepik.com/free-vector/shiny-background-with-spotlights_23-2147597659.jpg?ga=GA1.1.484524150.1698403282&semt=ais_hybrid");
-        background-size: cover;
-        background-position: center;
-        height: 100vh;
-        margin: 0;
-        font-family: Arial, sans-serif;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #00274d; /* Dark blue background */
+      display: flex;
+      flex-direction: column; /* Ensure header is at the top */
+    }
 
-      .container {
-        width: 80%;
-        margin: auto;
-        padding: 20px;
-      }
+    /* Header styling */
+    .header {
+      background-color: #00274d; /* Navy blue */
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%; /* Full width of the page */
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
 
-      h1 {
-        color: #0d5e81;
-        font-size: 60px;
-        text-align: center;
-        margin-bottom: 40px;
-      }
+    .header .college-info {
+      line-height: 1.5;
+    }
 
-      .event-card {
-        position: relative;
-        padding: 20px;
-        margin: 20px 0;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        background-color: #f9fefc;
-      }
+    .header .college-info h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-      .event-card h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
-        color: #333;
-      }
+    .header .college-info p {
+      margin: 0;
+      font-size: 14px;
+    }
 
-      .event-card p {
-        margin: 5px 0;
-        color: #555;
-        font-size: 16px;
-      }
+    /* Main container for sidebar and content */
+    .main-content {
+      display: flex;
+      flex-direction: row; /* Place sidebar and content side by side */
+      width: 100%;
+      flex-grow: 1;
+    }
 
-      .event-card a {
-        text-decoration: none;
-        color: #007bff;
-        font-weight: bold;
-      }
+    /* Sidebar styling */
+    .sidebar {
+      width: 220px;
+      background-color: #013a63; /* Slightly lighter shade of navy blue */
+      color: #ffffff; /* White text for contrast */
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    }
 
-      .event-dates {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        text-align: right;
-      }
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 100%; /* Center the title horizontally */
+      color: #e3f2fd; /* Light tint of blue for the title */
+    }
 
-      .event-dates .date-item {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        margin-bottom: 5px;
-      }
+    .sidebar a {
+      display: block;
+      color: #e3f2fd; /* Light tint of blue for links */
+      text-decoration: none;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      width: 100%; /* Makes links take the full width */
+      font-weight: bold;
+    }
 
-      .event-dates .calendar-icon {
-        width: 16px;
-        height: 16px;
-        margin-right: 5px;
-      }
+    .sidebar a:hover {
+      background-color: #01497c; /* Slightly darker shade of blue for hover */
+    }
 
-      .event-dates p {
-        margin: 0;
-        font-size: 14px;
-        color: #333;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Upcoming Events</h1>
-      {% if events %} {% for event in events %}
-      <div class="event-card">
-        <!-- Start and End Date with Calendar Icon -->
-        <div class="event-dates">
-          <div class="date-item">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="calendar-icon"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"
-              />
-            </svg>
-            <p><strong>Start:</strong> {{ event.eventStart }}</p>
-          </div>
-          <div class="date-item">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="calendar-icon"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"
-              />
-            </svg>
-            <p><strong>End:</strong> {{ event.eventEnd }}</p>
-          </div>
-        </div>
+    /* Page content styling */
+    .page-container {
+      background-color: white; /* White content area */
+      margin: 20px;
+      border-radius: 10px; /* Rounded corners */
+      flex-grow: 1; /* Take up the remaining space */
+      border: 2px solid rgba(211, 211, 211, 0.8); /* Same as footer color */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      padding: 40px; /* Padding for content */
+    }
 
-        <!-- Event Details -->
-        <h2>{{ event.name }}</h2>
-        <p><strong>Organizer:</strong> {{ event.organizer }}</p>
-        <p><strong>Department ID:</strong> {{ event.deptID }}</p>
-        <p><strong>Type:</strong> {{ event.type_of_event }}</p>
-        <p><strong>Description:</strong> {{ event.description }}</p>
-        <a href="{{ event.registration_link }}" target="_blank"
-          >Register Here</a
-        >
-      </div>
-      {% endfor %} {% else %}
-      <p>No events available for registration at this time.</p>
-      {% endif %}
+    /* Specific styles for the event registration content */
+    .container {
+      width: 100%; /* Adjusted to fit inside the page container */
+    }
+
+    .container h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .event-card {
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-card h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .event-card p {
+      margin: 5px 0;
+    }
+
+    .event-card a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .event-card a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      background-color: rgba(211, 211, 211, 0.8); /* Light grey with transparency */
+      color: #333; /* Darker text for contrast */
+      padding: 10px 20px;
+      font-size: 12px; /* Smaller font for footer text */
+      text-align: center;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      border-top: 2px solid rgba(211, 211, 211, 0.8); /* Clear border for footer */
+      margin-top: auto;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="college-info">
+      <h1>ANIL NEERUKONDA INSTITUTE OF TECHNOLOGY & SCIENCES (Autonomous)</h1>
+      <p>(Permanent Affiliation by Andhra University & Approved by AICTE)</p>
+      <p>Accredited by NBA (ECE, EEE, CSE, IT, Mech, Civil & Chemical) & NAAC A+</p>
+      <p>Sangivalasa-531 162, Bheemunipatnam Mandal, Visakhapatnam District</p>
     </div>
-  </body>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Campus Genius</h2>
+      <a href="{% url 'student_profile' %}">My Profile</a>
+      <a href="#">Attendance</a>
+      <br>
+      <a href="{% url 'clubs' %}">Clubs</a>
+      <a href="#">Achievements</a>
+      <a href="{% url 'suggestion' %}">Suggestion</a>
+      <a href="{% url 'event_registration' %}">Event Registration</a>
+      <a href="{% url 'announcements' %}">Announcements</a>
+    </div>
+
+    <!-- Page Container -->
+    <div class="page-container">
+      <div class="container">
+        <h1>Upcoming Events</h1>
+        {% if events %}
+        {% for event in events %}
+        <div class="event-card">
+          <h2>{{ event.name }}</h2>
+          <p><strong>Organizer:</strong> {{ event.organizer }}</p>
+          <p><strong>Department ID:</strong> {{ event.deptID }}</p>
+          <p><strong>Type:</strong> {{ event.type_of_event }}</p>
+          <p><strong>Start:</strong> {{ event.eventStart }}</p>
+          <p><strong>End:</strong> {{ event.eventEnd }}</p>
+          <p><strong>Description:</strong> {{ event.description }}</p>
+          <a href="{{ event.registration_link }}" target="_blank">Register Here</a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No events available for registration at this time.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 ANITS. All rights reserved.</p>
+  </div>
+</body>
 </html>

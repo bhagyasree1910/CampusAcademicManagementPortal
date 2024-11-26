@@ -1,96 +1,288 @@
-<form method="POST" action="{% url 'add_student_information' %}">
-    {% csrf_token %}
-    
-    <!-- Student ID -->
-    <label for="studentID">Student ID:</label>
-    <input type="text" id="studentID" name="studentID" required><br><br>
+add_student_information:
 
-    <!-- Name -->
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
 
-    <!-- Department -->
-    <label for="deptID">Department:</label>
-    <select id="deptID" name="deptID" required>
-        <option value="a100">CSM</option>
-        <option value="a101">CSD</option>
-    </select><br><br>
 
-    <!-- Phone Number -->
-    <label for="phnNo">Phone Number:</label>
-    <input type="text" id="phnNo" name="phnNo" required><br><br>
 
-    <!-- Date of Birth -->
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required><br><br>
 
-    <!-- Personal Email -->
-    <label for="personalMail">Personal Email:</label>
-    <input type="email" id="personalMail" name="personalMail" required><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Student Information</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #00274d; /* Dark blue background */
+      display: flex;
+      flex-direction: column; /* Ensure header is at the top */
+    }
 
-    <!-- Section -->
-    <label for="section">Section:</label>
-    <input type="text" id="section" name="section" required><br><br>
+    /* Header styling */
+    .header {
+      background-color: #00274d; /* Navy blue */
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%; /* Full width of the page */
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
 
-    <!-- Date of Joining -->
-    <label for="date_of_joining">Date of Joining:</label>
-    <input type="date" id="date_of_joining" name="date_of_joining" required><br><br>
+    .header .college-info {
+      line-height: 1.5;
+    }
 
-    <!-- Father Details -->
-    <label for="fathername">Father's Name:</label>
-    <input type="text" id="fathername" name="fathername" required><br><br>
+    .header .college-info h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+      color: white; /* Ensures text is white */
+    }
 
-    <label for="fatherphn">Father's Phone Number:</label>
-    <input type="text" id="fatherphn" name="fatherphn" required><br><br>
+    .header .college-info p {
+      margin: 0;
+      font-size: 14px;
+      color: white; /* Ensures text is white */
+    }
 
-    <label for="father_occupation">Father's Occupation:</label>
-    <input type="text" id="father_occupation" name="father_occupation" required><br><br>
+    /* Main container for sidebar and content */
+    .main-content {
+      display: flex;
+      flex-direction: row; /* Place sidebar and content side by side */
+      width: 100%;
+      flex-grow: 1;
+    }
 
-    <label for="fatherEducation">Father's Education:</label>
-    <input type="text" id="fatherEducation" name="fatherEducation" required><br><br>
+    /* Sidebar styling */
+    .sidebar {
+      width: 220px;
+      background-color: #013a63; /* Slightly lighter shade of navy blue */
+      color: #ffffff; /* White text for contrast */
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    }
 
-    <!-- Mother Details -->
-    <label for="mothername">Mother's Name:</label>
-    <input type="text" id="mothername" name="mothername" required><br><br>
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 100%; /* Center the title horizontally */
+      color: #e3f2fd; /* Light tint of blue for the title */
+    }
 
-    <label for="motherphn">Mother's Phone Number:</label>
-    <input type="text" id="motherphn" name="motherphn" required><br><br>
+    .sidebar a {
+      display: block;
+      color: #e3f2fd; /* Light tint of blue for links */
+      text-decoration: none;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      width: 100%; /* Makes links take the full width */
+      font-weight: bold;
+    }
 
-    <label for="mother_occupation">Mother's Occupation:</label>
-    <input type="text" id="mother_occupation" name="mother_occupation" required><br><br>
+    .sidebar a:hover {
+      background-color: #01497c; /* Slightly darker shade of blue for hover */
+    }
 
-    <label for="motherEducation">Mother's Education:</label>
-    <input type="text" id="motherEducation" name="motherEducation" required><br><br>
+    /* Page content styling */
+    .page-container {
+      background-color: white; /* White content area */
+      margin: 20px;
+      border-radius: 10px; /* Rounded corners */
+      flex-grow: 1; /* Take up the remaining space */
+      border: 2px solid rgba(211, 211, 211, 0.8); /* Same as footer color */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      padding: 40px; /* Padding for content */
+    }
 
-    <!-- Address -->
-    <label for="address">Address:</label>
-    <textarea id="address" name="address" required></textarea><br><br>
+    h1 {
+      text-align: center;
+      color: #333;
+    }
 
-    <!-- Hostel or Day Scholar -->
-    <label for="hostel_or_dayScholar">Hostel or Day Scholar:</label>
-    <select id="hostel_or_dayScholar" name="hostel_or_dayScholar" required>
-        <option value="hostel">Hostel</option>
-        <option value="dayscholar">Day Scholar</option>
-    </select><br><br>
+    form {
+      display: flex;
+      flex-direction: column;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 3D effect */
+    }
 
-    <!-- College Bus -->
-    <label for="collegeBus">College Bus:</label>
-    <select id="collegeBus" name="collegeBus" required>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-    </select><br><br>
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+    }
 
-    <!-- Aadhar Number -->
-    <label for="aadharNo">Aadhar Number:</label>
-    <input type="text" id="aadharNo" name="aadharNo" required><br><br>
+    input, select, textarea {
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Inner 3D effect */
+    }
 
-    <!-- Fee Reimbursement -->
-    <label for="fee_reimbursement">Fee Reimbursement:</label>
-    <select id="fee_reimbursement" name="fee_reimbursement" required>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-    </select><br><br>
+    textarea {
+      resize: vertical;
+    }
 
-    <!-- Submit button -->
-    <button type="submit">Submit</button>
-</form>
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .footer {
+      background-color: rgba(211, 211, 211, 0.8); /* Light grey with transparency */
+      color: #333; /* Darker text for contrast */
+      padding: 10px 20px;
+      font-size: 12px; /* Smaller font for footer text */
+      text-align: center;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      border-top: 2px solid rgba(211, 211, 211, 0.8); /* Clear border for footer */
+      margin-top: auto;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="college-info">
+      <h1>ANIL NEERUKONDA INSTITUTE OF TECHNOLOGY & SCIENCES (Autonomous)</h1>
+      <p>(Permanent Affiliation by Andhra University & Approved by AICTE)</p>
+      <p>Accredited by NBA (ECE, EEE, CSE, IT, Mech, Civil & Chemical) & NAAC A+</p>
+      <p>Sangivalasa-531 162, Bheemunipatnam Mandal, Visakhapatnam District</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Campus Genius</h2>
+      <a href="#">My Profile</a></li>
+        <a href="{% url 'admin_club' %}">Clubs</a>
+        <a href="{% url 'feedback_page' %}">Feedback</a>
+        <a href="#">Event Registration</a>
+        <a href="#">Announcements</a>
+        <a href="{% url 'add_student_information' %}">Add Student</a>
+        <a href="{% url 'view_student_information' %}">View Student Information</a>
+
+    </div>
+
+    <!-- Page Container -->
+    <div class="page-container">
+      <h1>Add Student Information</h1>
+      <form method="POST" action="{% url 'add_student_information' %}">
+        {% csrf_token %}
+        <!-- Form inputs -->
+        <label for="studentID">Student ID:</label>
+        <input type="text" id="studentID" name="studentID" required>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="deptID">Department:</label>
+        <select id="deptID" name="deptID" required>
+          <option value="a100">CSM</option>
+          <option value="a101">CSD</option>
+        </select>
+
+        <label for="phnNo">Phone Number:</label>
+        <input type="text" id="phnNo" name="phnNo" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="personalMail">Personal Email:</label>
+        <input type="email" id="personalMail" name="personalMail" required>
+
+        <label for="section">Section:</label>
+        <input type="text" id="section" name="section" required>
+
+        <label for="date_of_joining">Date of Joining:</label>
+        <input type="date" id="date_of_joining" name="date_of_joining" required>
+
+        <label for="fathername">Father's Name:</label>
+        <input type="text" id="fathername" name="fathername" required>
+
+        <label for="fatherphn">Father's Phone Number:</label>
+        <input type="text" id="fatherphn" name="fatherphn" required>
+
+        <label for="father_occupation">Father's Occupation:</label>
+        <input type="text" id="father_occupation" name="father_occupation" required>
+
+        <label for="fatherEducation">Father's Education:</label>
+        <input type="text" id="fatherEducation" name="fatherEducation" required>
+
+        <label for="mothername">Mother's Name:</label>
+        <input type="text" id="mothername" name="mothername" required>
+
+        <label for="motherphn">Mother's Phone Number:</label>
+        <input type="text" id="motherphn" name="motherphn" required>
+
+        <label for="mother_occupation">Mother's Occupation:</label>
+        <input type="text" id="mother_occupation" name="mother_occupation" required>
+
+        <label for="motherEducation">Mother's Education:</label>
+        <input type="text" id="motherEducation" name="motherEducation" required>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea>
+
+        <label for="hostel_or_dayScholar">Hostel or Day Scholar:</label>
+        <select id="hostel_or_dayScholar" name="hostel_or_dayScholar" required>
+          <option value="hostel">Hostel</option>
+          <option value="dayscholar">Day Scholar</option>
+        </select>
+
+        <label for="collegeBus">College Bus:</label>
+        <select id="collegeBus" name="collegeBus" required>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label for="aadharNo">Aadhar Number:</label>
+        <input type="text" id="aadharNo" name="aadharNo" required>
+
+        <label for="fee_reimbursement">Fee Reimbursement:</label>
+        <select id="fee_reimbursement" name="fee_reimbursement" required>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 ANITS. All rights reserved.</p>
+  </div>
+</body>
+</html>
