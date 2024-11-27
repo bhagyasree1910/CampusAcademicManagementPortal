@@ -1,52 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-      }
-      .container {
-        max-width: 400px;
-        margin: 50px auto;
-        padding: 20px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      input {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-      }
-      button {
-        width: 100%;
-        padding: 10px;
-        background: #007bff;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-      }
-      button:hover {
-        background: #0056b3;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Remove scrollbars on both axes */
+      height: 100%; /* Ensure full-page height */
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #003366; /* One shade darker than #00274d */
+      display: flex;
+      flex-direction: column; /* Ensure header is at the top */
+    }
+
+    /* Header styling */
+    .header {
+      background-color: #00274d; /* Navy blue */
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%; /* Full width of the page */
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .header .college-info {
+      line-height: 1.5;
+    }
+
+    .header .college-info h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .header .college-info p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* Centered container for login form */
+    .page-container {
+      background-color: white;
+      margin: 40px auto; /* Slightly reduced margin to lift the box up */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 15px 25px rgba(0, 0, 0, 0.2); /* 3D effect */
+      width: 100%;
+      max-width: 350px; /* Reduced size of the box */
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    form {
+      padding: 10px; /* Adds padding inside the login container */
+    }
+
+    input {
+      width: 100%;
+      padding: 12px; /* Adjusted padding for better aesthetics */
+      margin: 15px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle inner shadow for 3D look */
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* Button pop-out effect */
+      transition: transform 0.2s ease, background-color 0.2s ease; /* Smooth hover animation */
+    }
+
+    button:hover {
+      background: #0056b3;
+      transform: translateY(-2px); /* Slight lift on hover */
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: red;
+    }
+
+    .footer {
+      background-color: rgba(211, 211, 211, 0.8); /* Light grey with transparency */
+      color: #333; /* Darker text for contrast */
+      padding: 10px 20px;
+      font-size: 12px; /* Smaller font for footer text */
+      text-align: center;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      border-top: 2px solid rgba(211, 211, 211, 0.8); /* Clear border for footer */
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="college-info">
+      <h1>ANIL NEERUKONDA INSTITUTE OF TECHNOLOGY & SCIENCES (Autonomous)</h1>
+      <p>(Permanent Affiliation by Andhra University & Approved by AICTE)</p>
+      <p>Accredited by NBA (ECE, EEE, CSE, IT, Mech, Civil & Chemical) & NAAC A+</p>
+      <p>Sangivalasa-531 162, Bheemunipatnam Mandal, Visakhapatnam District</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="page-container">
       <h2>Login</h2>
       <form method="post">
         {% csrf_token %}
         <input type="text" name="rollno" placeholder="Roll Number" required />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-        />
+        <input type="password" name="password" placeholder="Password" required />
         <button type="submit">Login</button>
       </form>
       {% if messages %}
@@ -57,5 +143,11 @@
       </ul>
       {% endif %}
     </div>
-  </body>
+  </main>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 ANITS. All rights reserved.</p>
+  </div>
+</body>
 </html>
