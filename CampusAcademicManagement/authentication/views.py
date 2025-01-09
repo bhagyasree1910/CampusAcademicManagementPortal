@@ -652,3 +652,81 @@ def view_student_information(request):
     
     # Redirect to login if the session is not valid
     return redirect("admin_home")
+
+
+def admin_profile_view(request):
+    if "rollno" in request.session and request.session["role"] == "Admin":
+        rollno = request.session["rollno"]
+
+        # Query to fetch admin details
+        cursor = connection.cursor()
+        cursor.execute(
+            """
+            SELECT adminID, name, DOB, salary, experience, personalEmail, collegeEmail,
+                   address, phno, PAN, aadhaar
+            FROM adminpersonlinfo
+            WHERE adminID = %s
+            """,
+            [rollno],
+        )
+
+        admin_data = cursor.fetchone()
+        admin_info = {}
+        if admin_data:
+            admin_info = {
+                "adminID": admin_data[0],
+                "name": admin_data[1],
+                "DOB": admin_data[2],
+                "salary": admin_data[3],
+                "experience": admin_data[4],
+                "personalEmail": admin_data[5],
+                "collegeEmail": admin_data[6],
+                "address": admin_data[7],
+                "phno": admin_data[8],
+                "PAN": admin_data[9],
+                "aadhaar": admin_data[10],
+            }
+
+            return render(
+                request,
+                "admin_anits/admin_profile.html",
+                {"admin_info": admin_info},
+            )
+        else:
+            messages.error(request, "Admin details not found.")
+            return redirect("admin_home")
+
+    # Redirect to login if the session is not valid
+    return redirect("admin_home")
+
+
+def add_announcements(request):
+    if "rollno" in request.session and request.session["role"] == "Admin":
+        if request.method == "POST":
+            title = request.POST.get("title")
+            announcement_type = request.POST.get("type")
+            description = request.POST.get("description")
+
+            # Insert the announcement into the database
+            cursor = connection.cursor()
+            try:
+                cursor.execute(
+                    """
+                    INSERT INTO announcements (title, type, published, description)
+                    VALUES (%s, %s, %s, %s)
+                    """,
+                    [title, announcement_type, now(), description],
+                )
+                messages.success(request, "Announcement added successfully.")
+                return redirect("admin_announcements")
+            except Exception as e:
+                messages.error(request, f"Error adding announcement: {str(e)}")
+                return redirect("admin_announcements")
+
+        return render(
+            request,
+            "admin_anits/add-announcements.html",
+        )
+    else:
+        messages.error(request, "You must be logged in as an admin to access this page.")
+        return redirect("admin_home")

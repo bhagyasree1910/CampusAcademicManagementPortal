@@ -151,11 +151,10 @@
     <div class="sidebar">
       <h2>Campus Genius</h2>
       <ul>
-        <li><a href="#">My Profile</a></li>
+        <li><a href="{% url 'admin_profile' %}">My Profile</a></li>
         <li><a href="{% url 'admin_club' %}">Clubs</a></li>
         <li><a href="{% url 'feedback_page' %}">Feedback</a></li>
-        <li><a href="#">Event Registration</a></li>
-        <li><a href="#">Announcements</a></li>
+        <li><a href="{% url 'admin_announcements' %}">Announcements</a></li>
         <li><a href="{% url 'add_student_information' %}">Add Student</a></li>
         <li><a href="{% url 'view_student_information' %}">View Student Information</a></li>
       </ul>

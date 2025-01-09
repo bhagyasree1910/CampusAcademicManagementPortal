@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .profile-container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-container h1 {
+            text-align: center;
+            color: #333;
+        }
+        .profile-details {
+            margin-top: 20px;
+            padding: 10px 20px;
+        }
+        .profile-details h2 {
+            color: #444;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .profile-details p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .profile-details strong {
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Admin Profile</h1>
+        <div class="profile-details">
+            <h2>Basic Information</h2>
+            <p><strong>Admin ID:</strong> {{ admin_info.adminID }}</p>
+            <p><strong>Name:</strong> {{ admin_info.name }}</p>
+            <p><strong>Date of Birth:</strong> {{ admin_info.DOB }}</p>
+            <p><strong>Experience:</strong> {{ admin_info.experience }} years</p>
+            <p><strong>Salary:</strong> ₹{{ admin_info.salary }}</p>
+
+            <h2>Contact Information</h2>
+            <p><strong>Personal Email:</strong> {{ admin_info.personalEmail }}</p>
+            <p><strong>College Email:</strong> {{ admin_info.collegeEmail }}</p>
+            <p><strong>Phone Number:</strong> {{ admin_info.phno }}</p>
+
+            <h2>Address Details</h2>
+            <p><strong>Address:</strong> {{ admin_info.address }}</p>
+
+            <h2>Identification</h2>
+            <p><strong>PAN:</strong> {{ admin_info.PAN }}</p>
+            <p><strong>Aadhaar:</strong> {{ admin_info.aadhaar }}</p>
+        </div>
+    </div>
+</body>
+</html>

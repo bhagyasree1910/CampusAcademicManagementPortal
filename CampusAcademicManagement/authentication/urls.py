@@ -16,4 +16,6 @@ urlpatterns = [
     path("feedback/", views.feedback_page, name="feedback_page"),
     path('add_student/', views.add_student_information, name='add_student_information'),
     path('view_student/', views.view_student_information, name='view_student_information'),
+    path("profile/", views.admin_profile_view, name="admin_profile"),
+    path("admin_announcements/", views.add_announcements, name="admin_announcements"),
 ]
